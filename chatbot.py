@@ -2,8 +2,9 @@ import streamlit as st
 from transformers import pipeline
 import random
 
-# Initialize the Hugging Face pipeline for question answering
-qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
+
+# Initialize the Hugging Face pipeline for question answering using PyTorch
+qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2", framework="pt")
 
 # List of general apology messages
 apologies = [
