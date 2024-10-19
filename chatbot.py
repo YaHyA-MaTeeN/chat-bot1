@@ -25,16 +25,26 @@ def chat_with_yahya(question):
         # Get a random apology
         apology_message = get_random_apology()
 
+        # Here, you can set a more relevant context based on the question or general knowledge
+        context = "This chatbot uses advanced models to answer questions across various domains. You can ask about technology, science, or general knowledge."
+
         # Using the question-answering model
-        context = "This is a chatbot that tries to answer any general question based on a large dataset."
-        result = qa_pipeline(question=question, context=context)
+        try:
+            result = qa_pipeline(question=question, context=context)
 
-        # Extract the answer
-        answer = result['answer']
+            # Check if an answer is found
+            if result['score'] < 0.1:  # Adjust this threshold based on experimentation
+                answer = "I couldn't find a suitable answer for that. Please try asking something else!"
+            else:
+                answer = result['answer']
 
-        # Return the full response with the apology message
-        return f"{apology_message}\n\nAnswer: {answer}"
+            # Return the full response with the apology message
+            return f"{apology_message}\n\nAnswer: {answer}"
+        except Exception as e:
+            return f"{apology_message}\n\nAn error occurred: {str(e)}"
+    
     return "Please ask me a question."
+
 
 # Streamlit app setup
 def main():
