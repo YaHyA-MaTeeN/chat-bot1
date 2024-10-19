@@ -1,4 +1,4 @@
-streamlit==1.39.0
+streamlit
 torch
 transformers==4.31.0
 tokenizers # Specific version known to work without needing Rust
