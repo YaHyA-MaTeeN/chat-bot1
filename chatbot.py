@@ -2,9 +2,8 @@ import streamlit as st
 from transformers import pipeline
 import random
 
-
 # Initialize the Hugging Face pipeline for question answering using PyTorch
-qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2", framework="pt")
+qa_pipeline = pipeline("question-answering", model="bert-large-uncased-whole-word-masking-finetuned-squad", framework="pt")
 
 # List of general apology messages
 apologies = [
@@ -25,14 +24,14 @@ def chat_with_yahya(question):
         # Get a random apology
         apology_message = get_random_apology()
 
-        # Create a dynamic context (You can replace this with a call to an API or database)
+        # Create a dynamic context
         context = "You can ask me about various topics, including science, technology, history, and general knowledge. I will do my best to provide an accurate answer based on the information I have."
 
         # Using the question-answering model
         try:
             result = qa_pipeline(question=question, context=context)
 
-            # Adjust this threshold based on experimentation to find the right balance
+            # Adjust this threshold based on experimentation
             if result['score'] < 0.2:  # 0.2 is a threshold you can tweak
                 answer = "I'm sorry, I couldn't find a suitable answer for that. Could you please rephrase your question?"
             else:
@@ -44,8 +43,6 @@ def chat_with_yahya(question):
             return f"{apology_message}\n\nAn error occurred: {str(e)}"
 
     return "Please ask me a question."
-
-
 
 # Streamlit app setup
 def main():
