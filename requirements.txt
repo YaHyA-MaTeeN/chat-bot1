@@ -1,2 +1,5 @@
 streamlit
+torch
+tensorflow
+streamlit
 transformers
