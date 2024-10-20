@@ -26,10 +26,10 @@ def chat_with_yahya(question):
 
         # Using the text-generation model from Flan-T5
         try:
+            print(f"User question: {question}")  # Debugging line
+
             # Generate an answer using Flan-T5
             result = qa_pipeline(f"Please provide a detailed answer to the following question: {question}")
-
-            # Extracting the result (Flan-T5 provides an array, so we pick the first result)
             answer = result[0]['generated_text']
 
             # Return the full response with the apology message
@@ -42,18 +42,20 @@ def chat_with_yahya(question):
 # Streamlit app setup
 def main():
     # Set up cute pastel theme colors with CSS
-    st.markdown("""<style>
+    st.markdown("""
+        <style>
         body { background-color: #FFF7F0; }
         .stApp { background-color: #FDE4E4; border-radius: 10px; padding: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); }
         .stTextInput, .stButton { background-color: #FCE8E8; border: 1px solid #F9C6C6; border-radius: 12px; padding: 10px; margin: 10px 0; }
         .stButton { background-color: #FFDFDF; }
         h1 { color: #FF69B4; font-family: "Comic Sans MS", "Comic Sans", cursive; text-align: center; }
         .chat-response { background-color: #FFE4E1; border: 2px solid #FADADD; border-radius: 12px; padding: 15px; font-family: "Comic Sans MS", cursive; font-size: 16px; color: #6B5B95; }
-        </style>""", unsafe_allow_html=True)
+        </style>
+        """, unsafe_allow_html=True)
 
     st.title("YAHYA's Apologetic Chatbot 🤖")
 
-    # Display cute image (replace with your valid URL)
+    # Display a cute image
     st.image("https://i.imgur.com/ageihho.png", use_column_width=True)
 
     # Input for user's question
@@ -62,7 +64,7 @@ def main():
     # If the user submits a question, get the chatbot response
     if st.button("Get Answer"):
         response = chat_with_yahya(user_question)
-        st.text_area("Chatbot Response:", response, height=200)  # Use text_area for better visibility
+        st.markdown(f"<div class='chat-response'>{response}</div>", unsafe_allow_html=True)
 
 # Run the app
 if __name__ == "__main__":
