@@ -2,8 +2,8 @@ import streamlit as st
 from transformers import pipeline
 import random
 
-# Initialize the Hugging Face pipeline for question answering using PyTorch
-qa_pipeline = pipeline("question-answering", model="bert-large-uncased-whole-word-masking-finetuned-squad", framework="pt")
+# Initialize the Hugging Face pipeline for question answering using Flan-T5
+qa_pipeline = pipeline("text2text-generation", model="google/flan-t5-large", framework="pt")
 
 # List of general apology messages
 apologies = [
@@ -24,18 +24,16 @@ def chat_with_yahya(question):
         # Get a random apology
         apology_message = get_random_apology()
 
-        # Create a dynamic context
+        # Create a dynamic context (this can be more advanced in real use)
         context = "You can ask me about various topics, including science, technology, history, and general knowledge. I will do my best to provide an accurate answer based on the information I have."
 
-        # Using the question-answering model
+        # Using the text-generation model from Flan-T5
         try:
-            result = qa_pipeline(question=question, context=context)
+            # Generate an answer using Flan-T5
+            result = qa_pipeline(f"Answer the question: {question}")
 
-            # Adjust this threshold based on experimentation
-            if result['score'] < 0.2:  # 0.2 is a threshold you can tweak
-                answer = "I'm sorry, I couldn't find a suitable answer for that. Could you please rephrase your question?"
-            else:
-                answer = result['answer']
+            # Extracting the result (Flan-T5 provides an array, so we pick the first result)
+            answer = result[0]['generated_text']
 
             # Return the full response with the apology message
             return f"{apology_message}\n\nAnswer: {answer}"
