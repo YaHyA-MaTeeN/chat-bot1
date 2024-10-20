@@ -24,9 +24,6 @@ def chat_with_yahya(question):
         # Get a random apology
         apology_message = get_random_apology()
 
-        # Create a dynamic context (this can be more advanced in real use)
-        context = "You can ask me about various topics, including science, technology, history, and general knowledge. I will do my best to provide an accurate answer based on the information I have."
-
         # Using the text-generation model from Flan-T5
         try:
             # Generate an answer using Flan-T5
@@ -42,51 +39,21 @@ def chat_with_yahya(question):
 
     return "Please ask me a question."
 
-
 # Streamlit app setup
 def main():
     # Set up cute pastel theme colors with CSS
-    st.markdown("""
-        <style>
-        body {
-            background-color: #FFF7F0;
-        }
-        .stApp {
-            background-color: #FDE4E4;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .stTextInput, .stButton {
-            background-color: #FCE8E8;
-            border: 1px solid #F9C6C6;
-            border-radius: 12px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        .stButton {
-            background-color: #FFDFDF;
-        }
-        h1 {
-            color: #FF69B4;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            text-align: center;
-        }
-        .chat-response {
-            background-color: #FFE4E1;
-            border: 2px solid #FADADD;
-            border-radius: 12px;
-            padding: 15px;
-            font-family: "Comic Sans MS", cursive;
-            font-size: 16px;
-            color: #6B5B95;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    st.markdown("""<style>
+        body { background-color: #FFF7F0; }
+        .stApp { background-color: #FDE4E4; border-radius: 10px; padding: 20px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); }
+        .stTextInput, .stButton { background-color: #FCE8E8; border: 1px solid #F9C6C6; border-radius: 12px; padding: 10px; margin: 10px 0; }
+        .stButton { background-color: #FFDFDF; }
+        h1 { color: #FF69B4; font-family: "Comic Sans MS", "Comic Sans", cursive; text-align: center; }
+        .chat-response { background-color: #FFE4E1; border: 2px solid #FADADD; border-radius: 12px; padding: 15px; font-family: "Comic Sans MS", cursive; font-size: 16px; color: #6B5B95; }
+        </style>""", unsafe_allow_html=True)
 
     st.title("YAHYA's Apologetic Chatbot 🤖")
 
-    # Display cute image (you can add any image URL you want)
+    # Display cute image (replace with your valid URL)
     st.image("https://i.imgur.com/ageihho.png", use_column_width=True)
 
     # Input for user's question
@@ -95,7 +62,7 @@ def main():
     # If the user submits a question, get the chatbot response
     if st.button("Get Answer"):
         response = chat_with_yahya(user_question)
-        st.markdown(f"<div class='chat-response'>{response}</div>", unsafe_allow_html=True)
+        st.text_area("Chatbot Response:", response, height=200)  # Use text_area for better visibility
 
 # Run the app
 if __name__ == "__main__":
