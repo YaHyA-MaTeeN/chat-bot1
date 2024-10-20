@@ -7,11 +7,11 @@ qa_pipeline = pipeline("text2text-generation", model="google/flan-t5-large", fra
 
 # List of general apology messages
 apologies = [
-    "YAHYA here, I know I messed up before! 😞 I'm really sorry about that. Now, let me help with your question.",
-    "I'm still trying to make up for that mistake I made earlier... Forgive me! 🥺 Let's see how I can help you now.",
-    "YAHYA sincerely apologizes for what happened earlier. 🙏 Hopefully, I can make things right with this answer.",
-    "I hope you can forgive me for my previous mistake. 🥺 YAHYA is ready to assist you with your query!",
-    "I realize I wasn't great earlier. 😔 My apologies, YAHYA here. Let me make it up to you by answering your question."
+    "YAHYA here, I know I messed up before! I'm really sorry about that. Now, let me help with your question.",
+    "I'm still trying to make up for that mistake I made earlier... Forgive me! Let's see how I can help you now.",
+    "YAHYA sincerely apologizes for what happened earlier. Hopefully, I can make things right with this answer.",
+    "I hope you can forgive me for my previous mistake. YAHYA is ready to assist you with your query!",
+    "I realize I wasn't great earlier. My apologies, YAHYA here. Let me make it up to you by answering your question."
 ]
 
 # Function to generate a random apology
@@ -24,7 +24,7 @@ def chat_with_yahya(question):
         # Get a random apology
         apology_message = get_random_apology()
 
-        # Create a dynamic context (you can enhance this)
+        # Create a dynamic context (this can be more advanced in real use)
         context = "You can ask me about various topics, including science, technology, history, and general knowledge. I will do my best to provide an accurate answer based on the information I have."
 
         # Using the text-generation model from Flan-T5
@@ -32,55 +32,70 @@ def chat_with_yahya(question):
             # Generate an answer using Flan-T5
             result = qa_pipeline(f"Answer the question: {question}")
 
-            # Extracting the result
+            # Extracting the result (Flan-T5 provides an array, so we pick the first result)
             answer = result[0]['generated_text']
 
             # Return the full response with the apology message
-            return f"{apology_message}\n\n**Answer:** {answer}"
+            return f"{apology_message}\n\nAnswer: {answer}"
         except Exception as e:
             return f"{apology_message}\n\nAn error occurred: {str(e)}"
 
     return "Please ask me a question."
 
+
 # Streamlit app setup
 def main():
-    # App title and styling
-    st.markdown(
-        """
+    # Set up cute pastel theme colors with CSS
+    st.markdown("""
         <style>
-        .main {
-            background-color: #f0f0f5;
+        body {
+            background-color: #FFF7F0;
         }
-        .reportview-container {
-            background: url("https://images.unsplash.com/photo-1527181152855-fc03fc7949c8");
-            background-size: cover;
+        .stApp {
+            background-color: #FDE4E4;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .stTextInput, .stButton {
+            background-color: #FCE8E8;
+            border: 1px solid #F9C6C6;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .stButton {
+            background-color: #FFDFDF;
+        }
+        h1 {
+            color: #FF69B4;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            text-align: center;
+        }
+        .chat-response {
+            background-color: #FFE4E1;
+            border: 2px solid #FADADD;
+            border-radius: 12px;
+            padding: 15px;
+            font-family: "Comic Sans MS", cursive;
+            font-size: 16px;
+            color: #6B5B95;
         }
         </style>
-        """, 
-        unsafe_allow_html=True
-    )
+        """, unsafe_allow_html=True)
 
-    st.title("🤖 YAHYA's Apologetic Chatbot 💬")
+    st.title("YAHYA's Apologetic Chatbot 🤖")
+
+    # Display cute image (you can add any image URL you want)
+    st.image("https://i.imgur.com/JJbOpHU.png", use_column_width=True)
 
     # Input for user's question
-    user_question = st.text_input("Ask me anything:", placeholder="Type your question here...")
+    user_question = st.text_input("Ask me anything:")
 
     # If the user submits a question, get the chatbot response
     if st.button("Get Answer"):
-        with st.spinner('YAHYA is thinking... 💭'):
-            response = chat_with_yahya(user_question)
-        # Display chatbot response
-        st.write(response)
-
-    # Apology section (add cuteness here)
-    st.markdown(
-        """
-        <div style='text-align: center; color: gray;'>
-        <p style='font-size: 0.85em;'>I hope I got it right this time! 💖</p>
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
+        response = chat_with_yahya(user_question)
+        st.markdown(f"<div class='chat-response'>{response}</div>", unsafe_allow_html=True)
 
 # Run the app
 if __name__ == "__main__":
