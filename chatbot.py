@@ -87,7 +87,7 @@ def main():
     st.title("YAHYA's Apologetic Chatbot 🤖")
 
     # Display cute image (you can add any image URL you want)
-    st.image("<blockquote class="imgur-embed-pub" lang="en" data-id="undefined"><a href="https://imgur.com/undefined">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>", use_column_width=True)
+    st.image("https://i.imgur.com/ageihho.png", use_column_width=True)
 
     # Input for user's question
     user_question = st.text_input("Ask me anything:")
