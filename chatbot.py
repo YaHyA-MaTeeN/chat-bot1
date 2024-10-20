@@ -27,7 +27,7 @@ def chat_with_yahya(question):
         # Using the text-generation model from Flan-T5
         try:
             # Generate an answer using Flan-T5
-            result = qa_pipeline(f"Answer the question: {question}")
+            result = qa_pipeline(f"Please provide a detailed answer to the following question: {question}")
 
             # Extracting the result (Flan-T5 provides an array, so we pick the first result)
             answer = result[0]['generated_text']
